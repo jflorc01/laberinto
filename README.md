@@ -14,10 +14,10 @@
     * Casilla roja: meta,
 
 *Tareas:*
-    [x] Imprimir laberinto.
-    [x] Mover posición.
-    [x] Impedir que se mueva en los muros.
-    [ ] Imprimir solamente las casillas de alrededor del jugador.
+    - [x] Imprimir laberinto.
+    - [x] Mover posición.
+    - [x] Impedir que se mueva en los muros.
+    - [ ] Imprimir solamente las casillas de alrededor del jugador.
 
 *Ideas:*
     * La casilla vibra más cuanto más cerca de la meta.
