@@ -11,6 +11,16 @@ let laberinto = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
+const meta = [-1,-1];
+
+// for(let i = 0; i < laberinto.length; i++){
+//     for(let j = 0; j < laberinto[i].length; j++){
+//         if(laberinto[i][j] === 3){
+//             meta = [i, j];
+//         }
+//     }
+// }
+let divGanador = document.getElementById("ganador");
 const canvas = document.getElementById('laberinto');
     const ctx = canvas.getContext('2d');
     const tileSize = 50;
@@ -65,9 +75,23 @@ const canvas = document.getElementById('laberinto');
         return mat;
     }
 
+    function haGanado(laberinto){
+        let victoria = true;
+
+        for(let i = 0; i < laberinto.length; i++){
+            for(let j = 0; j < laberinto[i].length; j++){
+                if(laberinto[i][j] === 3){
+                    victoria = false;
+                }
+            }
+        }
+
+        return victoria;
+    }
+
     dibujarLaberinto(laberinto);
 
-    document.addEventListener('keydown', (event) => {
+    const flechaPresionada = (event) => {
         let x = 0, y = 0;
 
         if (event.key === 'ArrowUp') {
@@ -85,6 +109,13 @@ const canvas = document.getElementById('laberinto');
         }
 
         laberinto = mover(laberinto, x, y);
+        if(haGanado(laberinto)){
+            divGanador.innerHTML = "👑¡Enhorabuena, has ganado!👑";
+            dibujarLaberinto(laberinto);
+            document.removeEventListener('keydown', flechaPresionada);
+        }
         dibujarLaberinto(laberinto);
-    });
+    }
+
+    document.addEventListener('keydown', flechaPresionada);
 
