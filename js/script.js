@@ -24,7 +24,8 @@ let divGanador = document.getElementById("ganador");
 const canvas = document.getElementById('laberinto');
     const ctx = canvas.getContext('2d');
     const tileSize = 50;
-
+    var pjcol;
+    var pjfil;
     function dibujarLaberinto(matriz) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -34,14 +35,37 @@ const canvas = document.getElementById('laberinto');
                 const x = columna * tileSize;
                 const y = fila * tileSize;
 
-                if (valor === 1) {
+                if (valor === 1 && fila==pjfil+1 && columna==pjcol-1
+                    || valor === 1 && fila==pjfil+1 && columna==pjcol
+                    || valor === 1 && fila==pjfil+1 && columna==pjcol+1
+                    || valor === 1 && fila==pjfil && columna==pjcol-1
+                    || valor === 1 && fila==pjfil && columna==pjcol+1
+                    || valor === 1 && fila==pjfil-1 && columna==pjcol+1
+                    || valor === 1 && fila==pjfil-1 && columna==pjcol-1
+                    || valor === 1 && fila==pjfil-1 && columna==pjcol) {
                     ctx.fillStyle = 'black';
                 } else if (valor === 2) {
                     ctx.fillStyle = 'green';
-                } else if (valor === 3) {
+                } else if (valor === 3 && fila==pjfil+1 && columna==pjcol-1
+                    || valor === 3 && fila==pjfil+1 && columna==pjcol
+                    || valor === 3 && fila==pjfil+1 && columna==pjcol+1
+                    || valor === 3 && fila==pjfil && columna==pjcol-1
+                    || valor === 3 && fila==pjfil && columna==pjcol+1
+                    || valor === 3 && fila==pjfil-1 && columna==pjcol+1
+                    || valor === 3 && fila==pjfil-1 && columna==pjcol-1
+                    || valor === 3 && fila==pjfil-1 && columna==pjcol) {
                     ctx.fillStyle = 'red';
-                } else {
+                } else if (valor === 0 && fila==pjfil+1 && columna==pjcol-1
+                    || valor === 0 && fila==pjfil+1 && columna==pjcol
+                    || valor === 0 && fila==pjfil+1 && columna==pjcol+1
+                    || valor === 0 && fila==pjfil && columna==pjcol-1
+                    || valor === 0 && fila==pjfil && columna==pjcol+1
+                    || valor === 0 && fila==pjfil-1 && columna==pjcol+1
+                    || valor === 0 && fila==pjfil-1 && columna==pjcol-1
+                    || valor === 0 && fila==pjfil-1 && columna==pjcol){
                     ctx.fillStyle = 'white';
+                } else{
+                    ctx.fillStyle = '#A9A9A9';
                 }
 
                 ctx.fillRect(x, y, tileSize, tileSize);
@@ -50,7 +74,21 @@ const canvas = document.getElementById('laberinto');
             }
         }
     }
-
+    function buscarPJ(matriz) {
+        for (let fila = 0; fila < matriz.length; fila++) {
+            for (let columna = 0; columna < matriz[fila].length; columna++) {
+                const valor = matriz[fila][columna];
+                // Coordenadas del bloque
+                const x = columna * tileSize;
+                const y = fila * tileSize;
+                if (valor === 2) {
+                    // Punto de partida
+                    pjcol= x/tileSize;
+                    pjfil=y/tileSize;
+                }
+            }
+        }
+    }
     function mover(matriz, x, y) {
         let mat = matriz;
         let posx, posy;
@@ -88,7 +126,7 @@ const canvas = document.getElementById('laberinto');
 
         return victoria;
     }
-
+    buscarPJ(laberinto);
     dibujarLaberinto(laberinto);
 
     const flechaPresionada = (event) => {
@@ -111,9 +149,11 @@ const canvas = document.getElementById('laberinto');
         laberinto = mover(laberinto, x, y);
         if(haGanado(laberinto)){
             divGanador.innerHTML = "👑¡Enhorabuena, has ganado!👑";
+            buscarPJ(laberinto);
             dibujarLaberinto(laberinto);
             document.removeEventListener('keydown', flechaPresionada);
         }
+        buscarPJ(laberinto);
         dibujarLaberinto(laberinto);
     }
 
