@@ -119,10 +119,13 @@ function buscarPJ(matriz) {
     }
   }
 }
+
+// Mueve el 2 en el array dependiendo de las coordenadas que se le pasen
 function mover(matriz, x, y) {
   let mat = matriz;
   let posx, posy;
 
+  // Encuentra la posición del jugador
   for (let i = 0; i < mat.length; i++) {
     for (let j = 0; j < mat[i].length; j++) {
       if (mat[i][j] === 2) {
@@ -132,6 +135,7 @@ function mover(matriz, x, y) {
     }
   }
 
+  // Cambia la posición
   if (mat[posx + x][posy + y] !== undefined && mat[posx + x][posy + y] !== 1) {
     mat[posx][posy] = 0;
     mat[posx + x][posy + y] = 2;
